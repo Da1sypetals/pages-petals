@@ -60,7 +60,8 @@ export default function PageViewer() {
         <button onClick={() => setConfirmOpen(true)} className="px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 backdrop-blur border border-zinc-200 shadow-sm text-zinc-400 hover:text-rose-500 transition-colors"><Trash weight="bold" className="w-3.5 h-3.5 inline mr-1" />Remove</button>
       </div>
       <article
-        className="prose prose-zinc max-w-none
+        className="mx-auto max-w-3xl px-6 pt-20 pb-12
+          prose prose-zinc
           prose-headings:font-semibold prose-headings:tracking-tight
           prose-h1:text-2xl prose-h1:mt-10 prose-h1:mb-4
           prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-3
