@@ -47,35 +47,24 @@ export default function PageViewer() {
   if (error || !page) return <div className="min-h-screen flex items-center justify-center bg-white"><div className="text-center"><p className="text-sm text-zinc-500 mb-4">{error || "Not found"}</p><Link href="/" className="text-sm text-emerald-600"><CaretLeft weight="bold" className="w-3.5 h-3.5 inline" /> Garden</Link></div></div>;
 
   return (
-    <>
+    <div className="fixed inset-0 flex flex-col">
       <ConfirmModal
         open={confirmOpen}
         title="Remove from garden"
-        message="This page will be permanently deleted. This action cannot be undone."
+        message="This page will be permanently deleted."
         onConfirm={handleDelete}
         onCancel={() => setConfirmOpen(false)}
       />
-      <div className="fixed top-4 left-4 z-50 flex items-center gap-2">
+      <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
         <Link href="/" className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 backdrop-blur border border-zinc-200 shadow-sm text-zinc-600 hover:text-zinc-900 hover:bg-white transition-colors"><CaretLeft weight="bold" className="w-3.5 h-3.5" />Garden</Link>
         <button onClick={() => setConfirmOpen(true)} className="px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 backdrop-blur border border-zinc-200 shadow-sm text-zinc-400 hover:text-rose-500 transition-colors"><Trash weight="bold" className="w-3.5 h-3.5 inline mr-1" />Remove</button>
       </div>
-      <article
-        className="mx-auto max-w-3xl px-6 pt-20 pb-12
-          prose prose-zinc
-          prose-headings:font-semibold prose-headings:tracking-tight
-          prose-h1:text-2xl prose-h1:mt-10 prose-h1:mb-4
-          prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-3
-          prose-h3:text-lg prose-h3:mt-6 prose-h3:mb-2
-          prose-p:text-[15px] prose-p:leading-relaxed prose-p:text-zinc-700
-          prose-a:text-emerald-600 prose-a:no-underline hover:prose-a:underline
-          prose-code:bg-zinc-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-[13px] prose-code:font-normal prose-code:before:content-none prose-code:after:content-none
-          prose-pre:bg-zinc-900 prose-pre:text-zinc-100 prose-pre:rounded-xl prose-pre:text-[13px]
-          prose-img:rounded-xl
-          prose-blockquote:border-l-emerald-500 prose-blockquote:bg-emerald-50/50 prose-blockquote:py-1 prose-blockquote:px-4 prose-blockquote:rounded-r-lg prose-blockquote:not-italic
-          prose-li:text-[15px] prose-li:text-zinc-700
-          prose-strong:text-zinc-900"
-        dangerouslySetInnerHTML={{ __html: page.content }}
+      <iframe
+        srcDoc={page.content}
+        className="flex-1 w-full border-0"
+        title={page.title}
+        sandbox="allow-scripts allow-same-origin"
       />
-    </>
+    </div>
   );
 }
