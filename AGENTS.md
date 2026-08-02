@@ -1,17 +1,17 @@
-# Pages Petals — Design Language
+# RULES — READ BEFORE ENDING EVERY RESPONSE
 
-This project uses the **soft-skill** design language from `taste-skill/`.
+1. Never claim something works without testing locally first.
+2. Never modify user data in Redis without explicit permission. The data is not yours.
+3. Store raw data as-is. Convert on read, never on write.
+4. Use iframe for rendering HTML pages that contain scripts.
+5. Check filename extension for markdown vs HTML. No content detection hacks.
+6. Server-side markdown conversion. No CDN scripts in iframe srcdoc.
+7. Never delete user data.
+8. Test with curl + browser before claiming a fix works.
+9. One rendering path. No type branching, no isHtmlContent, no prose, no cancelled flags.
+10. The user's file extension IS the type. .md = markdown, .html = html. Nothing else.
 
-Reference: `taste-skill/skills/soft-skill/SKILL.md`
+# Design Language
 
-Key principles:
-- Geist font (not Inter)
-- Emerald accent (#059669), zinc neutral palette
-- Phosphor Icons (Duotone weight)
-- Motion (Framer Motion) spring physics — no linear/ease-in-out
-- Double-bezel card architecture, generous whitespace
-- Anti-center layout bias
-- No AI-purple gradients, no generic glassmorphism
-- Single rendering path: iframe for page content, server-side markdown conversion
-- Filename extension determines markdown vs HTML (.md → markdown, .html → html)
-- Store raw data, convert on read
+Use **soft-skill** from `taste-skill/skills/soft-skill/SKILL.md`.
+Geist, emerald accent, zinc palette, Phosphor Duotone, Motion spring physics.
