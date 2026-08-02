@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { FlowerLotus, Lock, SignOut } from "@phosphor-icons/react";
 import DropZone from "./drop-zone";
 import PageCard from "./page-card";
