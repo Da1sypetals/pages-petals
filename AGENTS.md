@@ -11,6 +11,8 @@
 9. One rendering path. No type branching, no isHtmlContent, no prose, no cancelled flags.
 10. The user's file extension IS the type. .md = markdown, .html = html. Nothing else.
 
+Commit and push everything after EACH of your task.
+
 # Design Language
 
 Use **soft-skill** from `taste-skill/skills/soft-skill/SKILL.md`.
