@@ -197,12 +197,6 @@ export default function Garden() {
         </div>
       </section>
 
-      <footer className="border-t border-zinc-100 mt-16 py-8 px-6">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <p className="text-[11px] text-zinc-300">🌸 page petals</p>
-          <span className="text-[11px] text-zinc-300">Built with taste</span>
-        </div>
-      </footer>
     </div>
   );
 }
