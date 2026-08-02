@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { CaretLeft, Trash } from "@phosphor-icons/react";
@@ -10,7 +10,7 @@ const CSS = '<style>body{max-width:48rem;margin:5rem auto;padding:0 1.5rem;font-
 
 function mdDoc(raw) {
   const safe = raw.replace(/<\/script>/gi, '<\\/script>');
-  return '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' + CSS + '<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"><\\/script></head><body><div id="content"></div><script type="text/markdown" id="md">' + safe + '<\\/script><script>document.getElementById("content").innerHTML=marked.parse(document.getElementById("md").textContent,{breaks:true,gfm:true})<\\/script></body></html>';
+  return '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' + CSS + '</head><body><div id="content"></div><script id="md-src" type="text/markdown">' + safe + '</script><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>document.getElementById("content").innerHTML=marked.parse(document.getElementById("md-src").textContent,{breaks:true,gfm:true})</script></body></html>';
 }
 
 export default function PageViewer() {
@@ -21,6 +21,7 @@ export default function PageViewer() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const iframeRef = useRef(null);
 
   useEffect(() => {
     if (!id) return;
@@ -35,7 +36,12 @@ export default function PageViewer() {
         if (!contentRes.ok) throw new Error("Content not found");
         const raw = await contentRes.text();
         const html = meta.type === "markdown" ? mdDoc(raw) : raw;
-        setPage({ ...meta, content: html });
+
+        // Set via ref to avoid React re-render resetting srcDoc
+        if (iframeRef.current) {
+          iframeRef.current.srcdoc = html;
+        }
+        setPage(meta);
       } catch (e) {
         setError(e.message);
       } finally {
@@ -61,7 +67,7 @@ export default function PageViewer() {
         <Link href="/" className="flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 backdrop-blur border border-zinc-200 shadow-sm text-zinc-600 hover:text-zinc-900 hover:bg-white transition-colors"><CaretLeft weight="bold" className="w-3.5 h-3.5" />Garden</Link>
         <button onClick={() => setConfirmOpen(true)} className="px-3 py-1.5 rounded-full text-xs font-medium bg-white/80 backdrop-blur border border-zinc-200 shadow-sm text-zinc-400 hover:text-rose-500 transition-colors"><Trash weight="bold" className="w-3.5 h-3.5 inline mr-1" />Remove</button>
       </div>
-      <iframe srcDoc={page.content} className="flex-1 w-full border-0" title={page.title} sandbox="allow-scripts allow-same-origin" />
+      <iframe ref={iframeRef} className="flex-1 w-full border-0" title={page?.title || ""} sandbox="allow-scripts allow-same-origin" />
     </div>
   );
 }
