@@ -10,32 +10,37 @@ const PAGES_KEY = "pages:all";
 export async function listPages() {
   const ids = await kv.smembers(PAGES_KEY);
   if (!ids.length) return [];
-  const metaKeys = ids.map((id) => `page:${id}:meta`);
-  const raw = await kv.mget(...metaKeys);
-  return raw.filter(Boolean).map((m, i) => ({ id: ids[i], ...m }))
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const keys = ids.map((id) => `page:${id}:meta`);
+  const raw = await kv.mget(...keys);
+  return raw.filter(Boolean).map((m, i) => {
+    const isMd = m.filename.endsWith(".md");
+    return { id: ids[i], filename: m.filename, isMd, createdAt: m.createdAt };
+  }).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+}
+
+export function pageTitle(filename) {
+  return filename.replace(/\.(md|html?)$/i, "");
 }
 
 export async function getPage(id) {
   const meta = await kv.get(`page:${id}:meta`);
   if (!meta) return null;
-  return { id, ...meta };
+  return { id, filename: meta.filename, createdAt: meta.createdAt };
 }
 
 export async function getContent(id) {
   return kv.get(`page:${id}:content`);
 }
 
-export async function createPage({ title, content, type }) {
+export async function createPage(filename, content) {
   const id = crypto.randomUUID();
   const now = new Date().toISOString();
-  const snippet = (content || "").replace(/<[^>]+>/g, "").slice(0, 160);
   const pipe = kv.pipeline();
-  pipe.set(`page:${id}:meta`, { title, type, snippet, createdAt: now });
+  pipe.set(`page:${id}:meta`, { filename, createdAt: now });
   pipe.set(`page:${id}:content`, content);
   pipe.sadd(PAGES_KEY, id);
   await pipe.exec();
-  return { id, title, type, snippet, createdAt: now };
+  return { id, filename, createdAt: now };
 }
 
 export async function deletePage(id) {

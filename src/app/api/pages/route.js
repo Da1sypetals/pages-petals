@@ -1,5 +1,3 @@
-export const maxDuration = 60;
-
 import { NextResponse } from "next/server";
 import { listPages, createPage } from "@/lib/kv";
 
@@ -9,8 +7,8 @@ export async function GET() {
 }
 
 export async function POST(request) {
-  const { title, content, type } = await request.json();
-  if (!title || !content) return NextResponse.json({ error: "title and content required" }, { status: 400 });
-  const page = await createPage({ title, content, type: type || "html" });
+  const { filename, content } = await request.json();
+  if (!filename || !content) return NextResponse.json({ error: "filename and content required" }, { status: 400 });
+  const page = await createPage(filename, content);
   return NextResponse.json(page, { status: 201 });
 }

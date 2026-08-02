@@ -44,7 +44,7 @@ export default function Garden() {
         </div>
       </header>
 
-      {authed && <section className="px-6 pb-4"><DropZone onPageCreated={(p) => setPages(prev => [{ ...p, snippet: (p.content || "").replace(/<[^>]+>/g, "").slice(0, 160) }, ...(prev || [])])} /></section>}
+      {authed && <section className="px-6 pb-4"><DropZone onPageCreated={(p) => setPages(prev => [{ ...p, isMd: p.filename.endsWith(".md") }, ...(prev || [])])} /></section>}
 
       <section className="px-6 py-12">
         <div className="max-w-5xl mx-auto">

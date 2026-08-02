@@ -6,21 +6,22 @@ import Link from "next/link";
 import { FileText, Trash, ArrowUpRight } from "@phosphor-icons/react";
 import ConfirmModal from "./confirm-modal";
 
+const title = (f) => f.replace(/\.(md|html?)$/i, "");
+
 export default function PageCard({ page, onDelete }) {
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   return (
     <>
-      {onDelete && <ConfirmModal open={confirmOpen} title="Remove" message={`Delete "${page.title}"?`} onConfirm={() => { setConfirmOpen(false); onDelete(page.id); }} onCancel={() => setConfirmOpen(false)} />}
+      {onDelete && <ConfirmModal open={confirmOpen} title="Remove" message={`Delete "${title(page.filename)}"?`} onConfirm={() => { setConfirmOpen(false); onDelete(page.id); }} onCancel={() => setConfirmOpen(false)} />}
       <motion.div layout initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.96 }} transition={{ type: "spring", stiffness: 500, damping: 35 }}>
         <div className="group relative rounded-2xl bg-white border border-zinc-200/80 hover:border-zinc-300 hover:shadow-sm transition-all duration-300">
           <Link href={`/pages/${page.id}`} className="block p-5 pb-14">
             <div className="flex items-start gap-3">
               <span className="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0 mt-0.5"><FileText weight="duotone" className="w-4.5 h-4.5 text-emerald-600" /></span>
               <div className="min-w-0">
-                <h3 className="text-[15px] font-medium text-zinc-900 leading-snug truncate">{page.title}</h3>
-                <p className="text-[11px] text-zinc-400 mt-1 uppercase tracking-wider">{page.type}</p>
-                <p className="text-[13px] text-zinc-500 mt-2.5 leading-relaxed line-clamp-2">{page.snippet || "No preview"}</p>
+                <h3 className="text-[15px] font-medium text-zinc-900 leading-snug truncate">{title(page.filename)}</h3>
+                <p className="text-[11px] text-zinc-400 mt-1 uppercase tracking-wider">{page.isMd ? "markdown" : "html"}</p>
               </div>
             </div>
           </Link>

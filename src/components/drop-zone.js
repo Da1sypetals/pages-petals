@@ -19,7 +19,7 @@ export default function DropZone({ onPageCreated }) {
     reader.onload = (e) => {
       const text = e.target.result;
       const snippet = text.replace(/<[^>]+>/g, "").slice(0, 200);
-      setPreview({ title: file.name.replace(/\.(md|html?)$/i, ""), content: text, type: ext === "md" ? "markdown" : "html", snippet });
+      setPreview({ filename: file.name, content: text, snippet });
     };
     reader.onerror = () => setError("Failed to read");
     reader.readAsText(file);
@@ -42,7 +42,7 @@ export default function DropZone({ onPageCreated }) {
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center gap-3 min-w-0">
               <span className="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0"><FileText weight="duotone" className="w-4.5 h-4.5 text-emerald-600" /></span>
-              <div className="min-w-0"><p className="text-sm font-medium text-zinc-900 truncate">{preview.title}</p><p className="text-[11px] text-zinc-400 uppercase tracking-wider mt-0.5">{preview.type}</p></div>
+              <div className="min-w-0"><p className="text-sm font-medium text-zinc-900 truncate">{preview.filename}</p><p className="text-[11px] text-zinc-400 uppercase tracking-wider mt-0.5">{preview.filename.endsWith(".md") ? "markdown" : "html"}</p></div>
             </div>
             <button onClick={() => setPreview(null)} disabled={uploading} className="w-7 h-7 rounded-full bg-zinc-100 hover:bg-zinc-200 flex items-center justify-center transition-colors shrink-0"><X weight="bold" className="w-3.5 h-3.5 text-zinc-500" /></button>
           </div>
