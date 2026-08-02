@@ -126,15 +126,6 @@ export default function Garden() {
             Daisy&apos;s Page Garden
           </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-4 text-[15px] text-zinc-500 max-w-sm mx-auto leading-relaxed"
-          >
-            Drag Markdown or HTML files into your garden.
-            Each one becomes a page you can visit anytime.
-          </motion.p>
         </div>
       </header>
 
@@ -208,7 +199,7 @@ export default function Garden() {
 
       <footer className="border-t border-zinc-100 mt-16 py-8 px-6">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <p className="text-[11px] text-zinc-300">Pages Petals — personal content garden</p>
+          <p className="text-[11px] text-zinc-300">🌸 page petals</p>
           <span className="text-[11px] text-zinc-300">Built with taste</span>
         </div>
       </footer>
