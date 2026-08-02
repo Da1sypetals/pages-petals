@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { FlowerLotus, Lock, SignOut } from "@phosphor-icons/react";
 import DropZone from "./drop-zone";
 import PageCard from "./page-card";
@@ -37,9 +36,6 @@ export default function Garden() {
 
       <header className="relative pt-16 pb-8 px-6">
         <div className="max-w-3xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-[11px] font-medium text-emerald-700 uppercase tracking-wider mb-5"><FlowerLotus weight="duotone" className="w-3.5 h-3.5" />Pages Petals</span>
-          </motion.div>
           <motion.h1 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-4xl md:text-5xl font-semibold tracking-tight text-zinc-900 leading-[1.1] max-w-md mx-auto">Daisy&apos;s Page Garden</motion.h1>
         </div>
       </header>
